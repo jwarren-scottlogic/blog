@@ -46,20 +46,21 @@ The three talks run concurrently (denoted T1, T2, T3):
  - The Dark Side of Work-Life Balance: Avoiding Burnout in the Empire (T1)
  - Lightsaber Practise and Etiquette: Health and safety in the workplace (T2)
  - Parenting 101: how to tell a son that you’re his father (T3)
+T1 has a maximum capacity of 3 attendees, the other two talks have a maximum capacity of 1.
 
 Each attendee makes an ordered list of the talks. For example Anakin’s first choice is “Parenting 101”, his second choice is “The Dark Side of Work-Life Balance” and third choice is “Lightsaber Practise and Etiquette”. We can represent this as [1st: T3, 2nd: T1, 3rd: T2], or even more simply [3,1,2]. If we do the same for the other attendees, we have:
 
 <center> A - [3,1,2] B - [1,3,2] C - [1,2,3] D - [1,3,2] E - [3,1,2]</center>
-
-\
+<br>
 ![fig1: The attendees with their different choices]({{ site.github.url }}/jwarren/assets/assignment-algorithm-1/characterChoices.png)
-\
-<div style="float: left; width: 30%; margin-right: 15px;">
-    <img src="{{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png" alt="fig2" style="width: 100%;">
-</div>
+*fig1: the attendees choices represented graphically.*
 
-You can see this information explained in fig1 and fig2, where the attendees are placed into groups according to their first talk.
-<!-- ![The attendees grouped according to their first choice]({{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png) -->
+<figure style="float: left; width: 30%; margin-right: 15px;">
+    <img src="{{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png" alt="fig2: attendees grouped according to their first choice." style="width: 100%;">
+    <figcaption><em>fig2: attendees grouped according to their first choice. We will come back to this layout in future examples.</em></figcaption>
+</figure>
+
+You can see this information explained in fig1 and fig2.
 
 ## Basic solution
 
@@ -106,7 +107,8 @@ Essentially we are thinking ahead by saying people who have a very popular secon
 </div>
 
 It works! Balance in the force has been restored. 
-Sorting by choice (first, second or third) is a way of avoiding a further need to compromise in the immediate present. It is a short term consideration. However, as we saw, only taking this short-term idea into account may not lead to a better outcome. For this reason, we introduced an ordering by surplus difference. Ordering by surplus difference is essentially looking ahead and avoiding attendees having to compromise in the future. In the context of a single time slot, it is a (relatively) long term consideration. Taking both the short term and the long term considerations into account requires a balance as they need to be ordered simultaneously. Click on more if you would like to know how we calculated these values. <details><summary>more</summary>
+Sorting by choice (first, second or third) is a way of avoiding a further need to compromise in the immediate present. It is a short term consideration. However, as we saw, only taking this short-term idea into account may not lead to a better outcome. For this reason, we introduced an ordering by surplus difference. Ordering by surplus difference is essentially looking ahead and avoiding attendees having to compromise in the future. In the context of a single time slot, it is a (relatively) long term consideration. Taking both the short term and the long term considerations into account requires a balance as they need to be ordered simultaneously. 
+<details><summary>If you would like to know how we calculated these values, click</summary>
 Surplus difference is calculated by finding the difference between the room surplus of the current choice and the room surplus of their next unassigned choice. Room surplus is calculated as follows:
 
 <table>
@@ -132,16 +134,10 @@ Surplus difference is calculated by finding the difference between the room surp
   </tr>
 </table>
 
-<!-- | Talk is…        | Room surplus equals…                                                    | Room surplus range of values…                         |
-| --------------- | ----------------------------------------------------------------------- | ----------------------------------------------------- |
-| Oversubscribed  | Number of group attendees - max attendees                               | Room surplus > 0                                      |
-| Undersubscribed | Number of group attendees - min attendees - number of attendees in slot | Room surplus < -(Number of attendees in the slot)     |
-| Otherwise       | Number of group attendees - max attendees                               | -(Number of attendees in the slot) < Room surplus < 0 | -->
-
 To account for the attendee choice, surplus difference would be multiplied by a weight, defined as so:
-\
+
 current group weighting = 2 - 1 /over (choice for their current group)
 The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be 1, if the user is on their 2nd choice, the weight will be 1.5 and if the user is on their 3rd choice, the weight will be 1.6666... The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
 </details>
-\
+
 So you may be wondering, how do we define and measure compromise? And how can we do this over the course of multiple slots? These are good questions and will be answered in the next blog in the series. We’ll also get into the nitty gritty of the maths behind it all. Stay tuned!
