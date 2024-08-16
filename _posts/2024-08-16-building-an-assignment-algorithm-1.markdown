@@ -1,5 +1,5 @@
 ---
-title: Building an assignment algorithm 1
+title: Building an Assignment Algorithm - Episode 1 / 3
 date: 2024-08-16 9:22:00 Z
 categories:
 - Algorithms
@@ -53,8 +53,12 @@ Each attendee makes an ordered list of the talks. For example Anakin’s first c
 
 ![The attendees with their different choices]({{ site.github.url }}/jwarren/assets/assignment-algorithm-1/characterChoices.png)
 
+<div style="float: left; width: 30%; margin-right: 15px;">
+    <img src="{{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png" alt="The attendees grouped according to their first choice" style="width: 100%;">
+</div>
+
 You can see this information explained in the diagram to the ***left***, where the attendees are placed into groups according to their first talk.
-![The attendees grouped according to their first choice]({{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png)
+<!-- ![The attendees grouped according to their first choice]({{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png) -->
 
 ## Basic solution
 
@@ -77,7 +81,6 @@ A second choice and a third choice is not ideal among 5 attendees. Of course the
 We can solve one problem by making sure people who don’t get their first choice are more likely to get their second choice. For this next example, we will put attendees into groups according to what their first choice is as shown in the diagram above. If a talk is full, then we move the attendees to a new group according to their next choice. Whenever an attendee is moved between a group, we sort the unconfirmed attendees of that group according to what choice that group is for the attendee.
 A choice is cemented if at that stage, every group can accept the top attendee. i.e. The group is not full. (As the diagram will show). Here’s an example of this in practice.
 
-***First slide show ***
 <div style="position: relative; width: 100%; height: 0; padding-top: 100.0000%;
  padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
  border-radius: 8px; will-change: transform;">
@@ -85,14 +88,12 @@ A choice is cemented if at that stage, every group can accept the top attendee. 
     src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNXzlAgEI&#x2F;AbkC2uJ3dy-q513EnbhUuA&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
   </iframe>
 </div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNXzlAgEI&#x2F;AbkC2uJ3dy-q513EnbhUuA&#x2F;view?utm_content=DAGNXzlAgEI&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Assignment Algorithm blog1: sort by choice slideshow</a>
 
 Oh no, the same thing happened again! This time the Emperor got his second choice, but Darth Maul got his third. Heads still may roll! Are there any solutions with no 3rd choice, you may ask? Chewbacca and the Emperor swapping talks. Both would get their second choice, no one would get their 3rd choice.
 
 But how can we capture this in a rule? Chewbacca’s second choice (T2, Health and Safety) was not popular so had more capacity than the Emperor's second choice (T1 Work-life Balance) which was very popular. So let’s factor that in. Let’s say that when we order people, we sort according to choice and also by what the attendees next choice’s capacity is. We call this sorting by surplus difference - the score by which we measure how much free capacity an attendee's next choice has.
 Essentially we are thinking ahead by saying people who have a very popular second choice will be more likely to get their first choice. Let’s look at another example with this factored in.
 
-***Second slide show ***
 <div style="position: relative; width: 100%; height: 0; padding-top: 100.0000%;
  padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
  border-radius: 8px; will-change: transform;">
@@ -100,12 +101,9 @@ Essentially we are thinking ahead by saying people who have a very popular secon
     src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNXzlAgEI&#x2F;AbkC2uJ3dy-q513EnbhUuA&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
   </iframe>
 </div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNXzlAgEI&#x2F;AbkC2uJ3dy-q513EnbhUuA&#x2F;view?utm_content=DAGNXzlAgEI&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Assignment Algorithm blog1: sort by choice slideshow</a> by Joshua Warren
 
 It works! Balance in the force has been restored. 
-Sorting by choice (first, second or third) is a way of avoiding a further need to compromise in the immediate present. It is a short term consideration. However, as we saw, only taking this short-term idea into account may not lead to a better outcome. For this reason, we introduced an ordering by surplus difference. Ordering by surplus difference is essentially looking ahead and avoiding attendees having to compromise in the future. In the context of a single time slot, it is a (relatively) long term consideration. Taking both the short term and the long term considerations into account requires a balance as they need to be ordered simultaneously. Click on more if you would like to know how we calculated these values.
-
-<details><summary>more</summary>
+Sorting by choice (first, second or third) is a way of avoiding a further need to compromise in the immediate present. It is a short term consideration. However, as we saw, only taking this short-term idea into account may not lead to a better outcome. For this reason, we introduced an ordering by surplus difference. Ordering by surplus difference is essentially looking ahead and avoiding attendees having to compromise in the future. In the context of a single time slot, it is a (relatively) long term consideration. Taking both the short term and the long term considerations into account requires a balance as they need to be ordered simultaneously. Click on more if you would like to know how we calculated these values. <!-- <details><summary>more</summary> -->
 Surplus difference is calculated by finding the difference between the room surplus of the current choice and the room surplus of their next unassigned choice. Room surplus is calculated as follows:
 
 
@@ -118,6 +116,6 @@ Surplus difference is calculated by finding the difference between the room surp
 To account for the attendee choice, surplus difference would be multiplied by a weight, defined as so:
 $$ current group weighting = 2 - 1 /over (choice for their current group) $$
 The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be 1, if the user is on their 2nd choice, the weight will be 1.5 and if the user is on their 3rd choice, the weight will be 1.6666... The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
-</details>
+<!-- </details> -->
 
 So you may be wondering, how do we define and measure compromise? And how can we do this over the course of multiple slots? These are good questions and will be answered in the next blog in the series. We’ll also get into the nitty gritty of the maths behind it all. Stay tuned!
