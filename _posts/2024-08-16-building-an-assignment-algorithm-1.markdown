@@ -43,7 +43,11 @@ The conference would be split into time slots where multiple talks take place in
 We began by isolating the problem of how to assign talks for just one time slot, which  is a set of concurrent talks. However before we get bogged down in technical details, let's start with an example. 
 
 An intergalactic 3-talk conference for universal problems has 5 attendees: 
-Anakin (A), Boba fett (B), Chewbacca (C), Darth Maul (D), Emperor Palpatine (E); 
+A: Anakin
+B: Boba fett
+C: Chewbacca
+D: Darth Maul
+E: Emperor Palpatine
 
 The three talks run concurrently (denoted T1, T2, T3):
 
@@ -60,7 +64,7 @@ Each attendee makes an ordered list of the talks. For example Anakin’s first c
 ![fig1: The attendees with their different choices]({{ site.github.url }}/jwarren/assets/assignment-algorithm-1/characterChoices.png)
 *fig1: the attendees choices represented graphically.*
 
-<figure style="float: left; width: 30%; margin-right: 15px;">
+<figure style="float: left; width: 30%; margin-right: 20px;">
     <img src="{{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png" alt="fig2: attendees grouped according to their first choice." style="width: 100%;">
     <figcaption><em>fig2: attendees grouped according to their first choice. We will come back to this layout in future examples.</em></figcaption>
 </figure>
