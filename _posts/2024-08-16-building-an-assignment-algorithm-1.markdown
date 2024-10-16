@@ -33,6 +33,7 @@ Last year, our team was working on an app that organised conferences. Our most i
 ## The brief
 
 The conference would be split into time slots where multiple talks take place in each slot and have attendees who order their preferences for which talks they would like to attend for each time slot. We needed to make an algorithm which would…
+
 1. Take these choices, assign a talk to each attendee for every time slot 
 2. Make assignments in the fairest way possible (minimising the chance of a user getting a 2nd or 3rd choice). 
 3. Account for a minimum and a maximum capacity of each talk
@@ -40,12 +41,16 @@ The conference would be split into time slots where multiple talks take place in
 
 ## Genesis: a single time slot
 We began by isolating the problem of how to assign talks for just one time slot, which  is a set of concurrent talks. However before we get bogged down in technical details, let's start with an example. 
+
 An intergalactic 3-talk conference for universal problems has 5 attendees: 
 Anakin (A), Boba fett (B), Chewbacca (C), Darth Maul (D), Emperor Palpatine (E); 
+
 The three talks run concurrently (denoted T1, T2, T3):
+
  - The Dark Side of Work-Life Balance: Avoiding Burnout in the Empire (T1)
  - Lightsaber Practise and Etiquette: Health and safety in the workplace (T2)
  - Parenting 101: how to tell a son that you’re his father (T3)
+
 T1 has a maximum capacity of 3 attendees, the other two talks have a maximum capacity of 1.
 
 Each attendee makes an ordered list of the talks. For example Anakin’s first choice is “Parenting 101”, his second choice is “The Dark Side of Work-Life Balance” and third choice is “Lightsaber Practise and Etiquette”. We can represent this as [1st: T3, 2nd: T1, 3rd: T2], or even more simply [3,1,2]. If we do the same for the other attendees, we have:
@@ -65,6 +70,7 @@ You can see this information explained in fig1 and fig2.
 ## Basic solution
 
 Let’s begin with a simple solution. We go through the list of attendees alphabetically and assign each attendee their first possible choice:
+
 1. Anakin gets his much needed first choice on parenting (T3).
 2. Boba-Fett gets his first choice on avoiding burn-out (T1).
 3. Chewbacca has his first choice on work life balance (T1).
@@ -72,6 +78,7 @@ Let’s begin with a simple solution. We go through the list of attendees alphab
 5. Emperor Palpatine can’t get his first choice of avoiding burn-out in the empire (T1), nor his second choice for parenting (T3). So he gets his third choice and so has to sit through a painfully boring health and safety talk. Heads will roll.
 
 In summary:
+
 1. A - T3 (1st)
 2. B - T1 (1st)
 3. C - T1 (1st)
