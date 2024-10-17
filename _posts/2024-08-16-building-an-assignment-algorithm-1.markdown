@@ -5,7 +5,7 @@ categories:
 - Algorithms
 tags:
 - Algorithms
-summary: How we built an assignment algoirthm, the first blog in a series of 3.
+summary: How we built an assignment algorithm, the first blog in a series of 3.
 author: jwarren
 ---
 
@@ -42,12 +42,13 @@ The conference would be split into time slots where multiple talks take place in
 ## Genesis: a single time slot
 We began by isolating the problem of how to assign talks for just one time slot, which  is a set of concurrent talks. However before we get bogged down in technical details, let's start with an example. 
 
-An intergalactic 3-talk conference for universal problems has 5 attendees: 
-A: Anakin
-B: Boba fett
-C: Chewbacca
-D: Darth Maul
-E: Emperor Palpatine
+An intergalactic 3-talk conference for universal problems has 5 attendees:
+
+A. Anakin
+B. Boba fett
+C. Chewbacca
+D. Darth Maul
+E. Emperor Palpatine
 
 The three talks run concurrently (denoted T1, T2, T3):
 
@@ -64,7 +65,7 @@ Each attendee makes an ordered list of the talks. For example Anakin’s first c
 ![fig1: The attendees with their different choices]({{ site.github.url }}/jwarren/assets/assignment-algorithm-1/characterChoices.png)
 *fig1: the attendees choices represented graphically.*
 
-<figure style="float: left; width: 30%; margin-right: 20px;">
+<figure style="float: left; width: 30%; margin-right: 30px;">
     <img src="{{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png" alt="fig2: attendees grouped according to their first choice." style="width: 100%;">
     <figcaption><em>fig2: attendees grouped according to their first choice. We will come back to this layout in future examples.</em></figcaption>
 </figure>
@@ -119,7 +120,7 @@ Essentially we are thinking ahead by saying people who have a very popular secon
 
 It works! Balance in the force has been restored. 
 Sorting by choice (first, second or third) is a way of avoiding a further need to compromise in the immediate present. It is a short term consideration. However, as we saw, only taking this short-term idea into account may not lead to a better outcome. For this reason, we introduced an ordering by surplus difference. Ordering by surplus difference is essentially looking ahead and avoiding attendees having to compromise in the future. In the context of a single time slot, it is a (relatively) long term consideration. Taking both the short term and the long term considerations into account requires a balance as they need to be ordered simultaneously. 
-<details><summary>If you would like to know how we calculated these values, click</summary>
+<details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
 Surplus difference is calculated by finding the difference between the room surplus of the current choice and the room surplus of their next unassigned choice. Room surplus is calculated as follows:
 
 <table>
@@ -150,5 +151,5 @@ To account for the attendee choice, surplus difference would be multiplied by a 
 current group weighting = 2 - 1 /over (choice for their current group)
 The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be 1, if the user is on their 2nd choice, the weight will be 1.5 and if the user is on their 3rd choice, the weight will be 1.6666... The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
 </details>
-
+\
 So you may be wondering, how do we define and measure compromise? And how can we do this over the course of multiple slots? These are good questions and will be answered in the next blog in the series. We’ll also get into the nitty gritty of the maths behind it all. Stay tuned!
