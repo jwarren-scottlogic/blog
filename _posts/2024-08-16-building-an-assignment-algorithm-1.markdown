@@ -65,7 +65,7 @@ Each attendee makes an ordered list of the talks. For example Anakin’s first c
 ![fig1: The attendees with their different choices]({{ site.github.url }}/jwarren/assets/assignment-algorithm-1/characterChoices.png)
 *fig1: the attendees choices represented graphically.*
 
-<figure style="float: left; width: 30%; margin-right: 30px;">
+<figure style="float: right; width: 30%; margin-right: 30px;">
     <img src="{{ site.github.url }}/jwarren/assets/assignment-algorithm-1/initialGroupingColour.png" alt="fig2: attendees grouped according to their first choice." style="width: 100%;">
     <figcaption><em>fig2: attendees grouped according to their first choice. We will come back to this layout in future examples.</em></figcaption>
 </figure>
