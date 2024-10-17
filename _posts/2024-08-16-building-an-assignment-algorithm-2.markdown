@@ -39,7 +39,7 @@ Every time slot, attendees are given a slot compromise score according to what c
 
 In the end, we decided the compromise for getting the first choice should be 0 (no compromise at all),  the compromise for getting the 2nd choice is 2 and the compromise for getting their 3rd choice was 5. Take note of the incremental difference between first to second and second to third - the slot compromise score becomes increasingly worse.  
 
-<details><summary>If you would like to know how we calculated these values, click</summary>
+<details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
 This is based on the formula Cₙ = n + Cₙ₋₁, where Cₙ is the compromise for the nth choice and C1 = 0 . Which can also be reformulated to Cₙ = (n-1)(n+2)/2.  
 
 Looking back however, perhaps getting your 5th choice or your 6th choice wouldn’t be much different so perhaps choosing a curve that tends to a fixed value would be better (perhaps of the form 1-1/x), as we have done with surplus difference. In any case, there were only 3 choices per slot for our application, so this worked fine.  
@@ -105,7 +105,7 @@ However, if Chewbacca’s aggregate compromise was 5 and the emperor’s comprom
 
 Capturing these nuances in an algorithm however is easier said than done. Aggregate compromise, by nature, increases in size every slot so it is hard to compare with surplus difference, which remains roughly within the same range.  
 
-<details><summary>For an example click the expanding button.</summary>
+<details><summary>For an example click the 'more' button.</summary>
 
 For example, in slot 2, aggregate compromise per attendee could range from 0-5 (1st choice = 0, 3rd choice = 5), but in slot 10, the aggregate compromise per attendee could range between 0 and 50. Ignoring the fact that the algorithm would not be working very well if one person had 10x 3rd choices (giving an aggregate compromise score of 50)!  
 
@@ -116,9 +116,7 @@ We considered normalisation, however, the highest value (no matter whether an ou
 
 Finally, we landed on using the Z-score for aggregate compromise. The Z-score is a statistical value which measures how many standard deviations (a measure of spread) a dataset value is from the average. You can find out more on the Z-score here. This means that compromise will play a more significant role in sorting when the aggregate compromise value is an outlier, however it would have a relatively small effect if the value is close to the average of the attendees aggregate compromise, no matter how large the compromise or the surplus is.  
 
-Click the more button to see how we compared compromise and surplus difference exactly, along with the rationale. 
-
-<details><summary>more</summary>
+<details><summary>click the 'more' button for to see how we compared compromise and surplus difference exactly, along with the rationale.</summary>
 
 standardisedSurplusScore - standardisedCompromiseScore 
 
