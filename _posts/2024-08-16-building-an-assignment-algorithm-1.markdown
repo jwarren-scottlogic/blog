@@ -129,8 +129,8 @@ Surplus difference is calculated by finding the difference between the room surp
 <table>
   <tr>
       <th>Talk is…</th>
-      <th>Room surplus equals…</th>
-      <th>Room surplus range…</th>
+      <th>Room surplus</th>
+      <th>Room surplus range</th>
   </tr>
   <tr>
     <td>Oversubscribed</td>
@@ -150,8 +150,8 @@ Surplus difference is calculated by finding the difference between the room surp
 </table>
 
 To account for the attendee choice, surplus difference would be multiplied by a weight, defined as so:
-\[\text{current group weighting} = 2 - \frac{1}{choice for their current group}\]
-The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be 1, if the user is on their 2nd choice, the weight will be 1.5 and if the user is on their 3rd choice, the weight will be \( 1.\dot{6} \). The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
+\[\text{current group weighting} = 2 - \frac{1}{\text{choice for their current group}}\]
+The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be \(1\), if the user is on their 2nd choice, the weight will be \(1.5\) and if the user is on their 3rd choice, the weight will be \( 1.\dot{6} \). The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
 </details>
 <br>
 
