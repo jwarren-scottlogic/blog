@@ -25,7 +25,24 @@ author: jwarren
     }
     details[open] > summary::after {
         content: ' [−less]';
-        font-weight: 400;
+    }
+        details[open]::before {
+        content: '';
+        display: block;
+        border-top: 1px solid #ccc;
+        margin-top: 1em;
+    }
+
+    details[open]::after {
+        content: '';
+        display: block;
+        border-top: 1px solid #ccc;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+        details {
+        font-size: 0.9em;
+        font-style: italic;
     }
 </style>
 
