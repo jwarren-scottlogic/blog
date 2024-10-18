@@ -21,7 +21,7 @@ author: jwarren
         text-decoration: underline;
         text-decoration-style: dotted;
         padding-left: 0.5em;
-        font-size: 0.8em;
+        font-size: 1em;
     }
     details[open] > summary::after {
         content: ' [−less]';
@@ -143,8 +143,10 @@ Surplus difference is calculated by finding the difference between the room surp
 </table>
 
 To account for the attendee choice, surplus difference would be multiplied by a weight, defined as so:
-
-current group weighting = 2 - 1 /over (choice for their current group)
+<br>
+current group weighting = 2 - 1 / (choice for their current group)
+<br>
 The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be 1, if the user is on their 2nd choice, the weight will be 1.5 and if the user is on their 3rd choice, the weight will be 1.6666... The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
-</details>  
+</details>
+<br>
 So you may be wondering, how do we define and measure compromise? And how can we do this over the course of multiple slots? These are good questions and will be answered in the next blog in the series. We’ll also get into the nitty gritty of the maths behind it all. Stay tuned!
