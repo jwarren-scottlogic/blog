@@ -10,9 +10,10 @@ author: jwarren
 ---
 
 <!-- from: 2023-11-24-llm-mem.md -->
+
 <style> 
     summary {
-        font-weight: 400;
+        font-weight: 300;
         display: block;
     }
     summary::after {
@@ -25,10 +26,26 @@ author: jwarren
     }
     details[open] > summary::after {
         content: ' [−less]';
-        font-weight: 400;
     }
-</style>
+        details[open]::before {
+        content: '';
+        display: block;
+        border-top: 1px solid #ccc;
+        margin-top: 1em;
+    }
 
+    details[open]::after {
+        content: '';
+        display: block;
+        border-top: 1px solid #ccc;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+        details {
+        font-size: 0.9em;
+    }
+
+</style>
 <!-- MathJax the maths equations -->
 <script type="text/javascript" async
  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
