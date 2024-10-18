@@ -45,6 +45,10 @@ author: jwarren
         font-size: 0.9em;
         font-style: italic;
     }
+    details.no-italic {
+        font-size: 0.8em;
+        font-style: normal;
+    }
 </style>
 
 <!-- MathJax the maths equations -->
@@ -62,7 +66,9 @@ This time we will discuss  how we measured compromise,  and then explore its int
 ## Compromise
 Every time slot, attendees are given a slot compromise score according to what choice they were assigned. The greater the score, the more the attendee has had to compromise on their choice. We believe people are generally not too concerned about getting their 2nd choice, but comparatively a lot more disappointed to get their 3rd choice. Therefore we made the slot compromise score grow at an increasing rate. For example, the 3rd choice over the 2nd choice is worse than getting your 2nd choice over your 1st choice.  
 
-In the end, we decided the compromise for getting the first choice should be 0 (no compromise at all),  the compromise for getting the 2nd choice is 2 and the compromise for getting their 3rd choice was 5. Take note of the incremental difference between first to second and second to third - the slot compromise score becomes increasingly worse.<details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
+In the end, we decided the compromise for getting the first choice should be 0 (no compromise at all),  the compromise for getting the 2nd choice is 2 and the compromise for getting their 3rd choice was 5. Take note of the incremental difference between first to second and second to third - the slot compromise score becomes increasingly worse.
+
+<details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
 This is based on the formula \(Cₙ = n + Cₙ₋₁\), where \(C\)ₙ is the compromise for the nth choice and \(C1 = 0\) . Which can also be reformulated to... \[Cₙ = \frac{(n-1)(n+2)}{2}\]
 <br>
 Looking back however, perhaps getting your 5th choice or your 6th choice wouldn’t be much different so perhaps choosing a curve that tends to a fixed value would be better (perhaps of the form \(1-\frac{1}{x}\)), as we have done with surplus difference. In any case, there were only 3 choices per slot for our application, so this worked fine.  
@@ -126,21 +132,28 @@ However, if Chewbacca’s aggregate compromise was 5 and the emperor’s comprom
 
 ![fig4: Prioritising sorting by surplus difference: the 2nd play off between Chewbacca and The Emperor]({{ site.github.url }}/jwarren/assets/assignment-algorithm-2/table4.JPG)
 
-Capturing these nuances in an algorithm however is easier said than done. Aggregate compromise, by nature, increases in size every slot so it is hard to compare with surplus difference, which remains roughly within the same range. <details><summary>For an example click the 'more' button.</summary>
+Capturing these nuances in an algorithm however is easier said than done. Aggregate compromise, by nature, increases in size every slot so it is hard to compare with surplus difference, which remains roughly within the same range. 
+
+<details><summary>For an example click the 'more' button.</summary>
 For example, in slot 2, aggregate compromise per attendee could range from 0-5 (1st choice = 0, 3rd choice = 5), but in slot 10, the aggregate compromise per attendee could range between 0 and 50. Ignoring the fact that the algorithm would not be working very well if one person had 10x 3rd choices (giving an aggregate compromise score of 50)!  
 <br>
 <br>
 However, in both slot 2 and 10, the average surplus difference may be within the range of -6 and 6, assuming the average room surplus is 3. See the first blog in the series <a href="{{site.baseurl}}/2024/08/16/building-an-assignment-algorithm-1.html">here</a> for how the surplus difference is calculated. 
 <br>
 </details>
+
 <br>
 We considered normalisation, however, the highest value (no matter whether an outlier or close to the average) is always 1, meaning it is not a good indicator of the significance of compromise. If we think back to the example comparing Chewbacca and the Emperor, if there existed a large outlier of aggregate compromise, such as Darth Maul having 20+, then irrespective of whether Chewbacca had 10 or 5 for aggregate compromise, Chewbacca’s normalised aggregate compromise would be relatively similar in the two cases, and therefore distinguishing whether the difference between two attendees’ normalised aggregate compromise is significant would be difficult. Especially if the situations are more subtle. 
 
 Finally, we landed on using the Z-score for aggregate compromise. The Z-score is a statistical value which measures how many standard deviations (a measure of spread) a dataset value is from the average. You can find out more on the Z-score <a href="https://www.investopedia.com/terms/z/zscore.asp">here</a>. This means that compromise will play a more significant role in sorting when the aggregate compromise value is an outlier, however it would have a relatively small effect if the value is close to the average of the attendees aggregate compromise, no matter how large the compromise or the surplus is.  
 
-<details><summary>Click the 'more' button for to see how we compared compromise and surplus difference exactly, along with the rationale.</summary>
+<details class="no-italic"><summary>Click the 'more' button for to see how we compared compromise and surplus difference exactly, along with the rationale.</summary>
 <br>
-\[\text{sorting score} = standardisedSurplusScore - standardisedCompromiseScore \]
+<br>
+\(\text{sorting score} = standardisedSurplusScore - standardisedCompromiseScore \)
+<br>
+<br>
+<br>
 Where: 
 \[standardisedCompromiseScore = 
 \left( \frac{\text{mean surplus difference}}{\text{max surplus}} \right) \times \left( \frac{\text{attendee Z score}}{2.72} \right)^3
