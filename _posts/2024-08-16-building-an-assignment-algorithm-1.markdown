@@ -12,7 +12,7 @@ author: jwarren
 <!-- from: 2023-11-24-llm-mem.md -->
 <style> 
     summary {
-        font-weight: 300;
+        font-weight: 400;
         display: block;
     }
     summary::after {
@@ -21,7 +21,7 @@ author: jwarren
         text-decoration: underline;
         text-decoration-style: dotted;
         padding-left: 0.5em;
-        font-size: 1em;
+        font-size: 0.8em;
     }
     details[open] > summary::after {
         content: ' [−less]';
@@ -123,22 +123,22 @@ Surplus difference is calculated by finding the difference between the room surp
   <tr>
       <th>Talk is…</th>
       <th>Room surplus equals…</th>
-      <th>Room surplus range of values…</th>
+      <th>Room surplus range…</th>
   </tr>
   <tr>
     <td>Oversubscribed</td>
-    <td>Number of group attendees - max attendees</td>
+    <td>Number of group attendees <br>- max attendees</td>
     <td>Room surplus > 0</td>
   </tr>
   <tr>
     <td>Undersubscribed</td>
-    <td>Number of group attendees - min attendees - number of attendees in slot</td>
-    <td>Room surplus < -(Number of attendees in the slot)</td>
+    <td>Number of group attendees <br>- min attendees <br>- number of attendees in slot</td>
+    <td>Room surplus <br> < -(Number of attendees in the slot)</td>
   </tr>
   <tr>
     <td>Undersubscribed</td>
-    <td>Number of group attendees - max attendees</td>
-    <td>-(Number of attendees in the slot) < Room surplus < 0</td>
+    <td>Number of group attendees <br>- max attendees</td>
+    <td>-(Number of attendees in the slot) <br>< Room surplus < 0</td>
   </tr>
 </table>
 
@@ -149,4 +149,6 @@ current group weighting = 2 - 1 / (choice for their current group)
 The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be 1, if the user is on their 2nd choice, the weight will be 1.5 and if the user is on their 3rd choice, the weight will be 1.6666... The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
 </details>
 <br>
+
+### What's next? 
 So you may be wondering, how do we define and measure compromise? And how can we do this over the course of multiple slots? These are good questions and will be answered in the next blog in the series. We’ll also get into the nitty gritty of the maths behind it all. Stay tuned!
