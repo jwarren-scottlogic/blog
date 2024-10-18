@@ -12,7 +12,7 @@ author: jwarren
 <!-- from: 2023-11-24-llm-mem.md -->
 <style> 
     summary {
-        font-weight: 400;
+        font-weight: 300;
         display: block;
     }
     summary::after {
@@ -25,6 +25,7 @@ author: jwarren
     }
     details[open] > summary::after {
         content: ' [−less]';
+        font-weight: 400;
     }
 </style>
 
@@ -46,9 +47,9 @@ Every time slot, attendees are given a slot compromise score according to what c
 In the end, we decided the compromise for getting the first choice should be 0 (no compromise at all),  the compromise for getting the 2nd choice is 2 and the compromise for getting their 3rd choice was 5. Take note of the incremental difference between first to second and second to third - the slot compromise score becomes increasingly worse.  
 
 <details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
-This is based on the formula Cₙ = n + Cₙ₋₁, where Cₙ is the compromise for the nth choice and C1 = 0 . Which can also be reformulated to Cₙ = (n-1)(n+2)/2.  
-
-Looking back however, perhaps getting your 5th choice or your 6th choice wouldn’t be much different so perhaps choosing a curve that tends to a fixed value would be better (perhaps of the form 1-1/x), as we have done with surplus difference. In any case, there were only 3 choices per slot for our application, so this worked fine.  
+This is based on the formula \(Cₙ = n + Cₙ₋₁\), where \(C\)ₙ is the compromise for the nth choice and \(C1 = 0\) . Which can also be reformulated to \[Cₙ = \frac{(n-1)(n+2)}{2}\].  
+<br>
+Looking back however, perhaps getting your 5th choice or your 6th choice wouldn’t be much different so perhaps choosing a curve that tends to a fixed value would be better (perhaps of the form \(1-\frac{1}{x}\)), as we have done with surplus difference. In any case, there were only 3 choices per slot for our application, so this worked fine.  
 <br>
 </details>
 
@@ -113,8 +114,9 @@ Capturing these nuances in an algorithm however is easier said than done. Aggreg
 
 <details><summary>For an example click the 'more' button.</summary>
 For example, in slot 2, aggregate compromise per attendee could range from 0-5 (1st choice = 0, 3rd choice = 5), but in slot 10, the aggregate compromise per attendee could range between 0 and 50. Ignoring the fact that the algorithm would not be working very well if one person had 10x 3rd choices (giving an aggregate compromise score of 50)!  
-
-However, in both slot 2 and 10, the average surplus difference may be within the range of -6 and 6, assuming the average room surplus is 3. See the first blog in the series <a href="{{site.baseurl}}/2024-08-16-building-an-assignment-algorithm-1.markdown">here</a> for how the surplus difference is calculated. 
+<br>
+<br>
+However, in both slot 2 and 10, the average surplus difference may be within the range of -6 and 6, assuming the average room surplus is 3. See the first blog in the series <a href="{{site.baseurl}}/2024/08/16/building-an-assignment-algorithm-1.html">here</a> for how the surplus difference is calculated. 
 <br>
 </details>
 
@@ -123,19 +125,17 @@ We considered normalisation, however, the highest value (no matter whether an ou
 Finally, we landed on using the Z-score for aggregate compromise. The Z-score is a statistical value which measures how many standard deviations (a measure of spread) a dataset value is from the average. You can find out more on the Z-score here. This means that compromise will play a more significant role in sorting when the aggregate compromise value is an outlier, however it would have a relatively small effect if the value is close to the average of the attendees aggregate compromise, no matter how large the compromise or the surplus is.  
 
 <details><summary>click the 'more' button for to see how we compared compromise and surplus difference exactly, along with the rationale.</summary>
+<br>
 \[sorting score = standardisedSurplusScore - standardisedCompromiseScore \]
-<br>
-<br>
 Where: 
 \[standardisedCompromiseScore = 
 \left( \frac{\text{mean surplus difference}}{\text{max surplus}} \right) \times \left( \frac{\text{attendee Z score}}{2.72} \right)^3
 \]
-
+<br>
 N.B. The Z score is calculated with the median to avoid extreme value skewing.
 
----
-
-\[\text{if maxSurplus} \neq 0 \text{and attendee surplus difference} > 0 \text{:}\]
+<br>
+\(\text{if maxSurplus} \neq 0 \text{ and attendee surplus difference} > 0 \text{:}\)
 
 \[standardisedSurplusScore = 
 \frac{\text{attendee surplus difference}}{\text{max surplus difference}}
@@ -143,9 +143,10 @@ N.B. The Z score is calculated with the median to avoid extreme value skewing.
 
 (here max surplus has to be positive)
 
----
 
-\[\text{if maxSurplus} \neq 0 \text{and attendee surplus difference} < 0 \text{:}\]
+<br>
+<br>
+\(\text{if maxSurplus} \neq 0 \text{and attendee surplus difference} < 0 \text{:}\)
 
 \[standardisedSurplusScore =
 \frac{\text{attendee surplus difference}}{| \text{min surplus difference} |}
@@ -153,18 +154,18 @@ N.B. The Z score is calculated with the median to avoid extreme value skewing.
 
 (here min surplus has to be negative)
 
----
 
-\[\text{if maxSurplus} = 0  \text{:}\]
+<br>
+\(\text{if maxSurplus} = 0  \text{:}\)
 
-standardisedSurplusScore = \[
+\[standardisedSurplusScore =
 \text{attendee surplus difference}
 \]
  
 <br>
 The rationale behind this was as follows: 
 <br>
-The standardisedSurplusScore should be in comparison to the maximum value, otherwise the compromise would give an extreme value. We want the compromise to be in the same range of values as the standardisedSurplusScore, except for the outlier compromise, and therefore (\(\frac{\text{mean surplus difference}}{\text{max surplus}}\)) brings the standardisedCompromiseScore into the relative range of values, and (\(\frac{\text{attendee Z score}}{2.72}\)) should be in the range of \(\pm 1.3\), with the larger values being extremal. When this overtakes the standardisedSurplusScore, (surpassing the value just greater than 1), we want this to occur quite rapidly because extremal compromise is much more important to deal with. Therefore we cube it. Cubing not only rises quickly, but unlike squaring, it maintains the \(\pm\), which is important for capturing whether the value is above or below the median. After some fine tuning, it also appears to give an optimal result.  
+The \(\text{standardisedSurplusScore}\) should be in comparison to the maximum value, otherwise the \(\text{compromise}\) would give an extreme value. We want the \(\text{comrpomise}\) to be in the same range of values as the \(\text{standardisedSurplusScore}\), except for the outlying \(\text{comrpomise}\), and therefore (\(\frac{\text{mean surplus difference}}{\text{max surplus}}\)) brings the \(\text{standardisedCompromiseScore}\) into the relative range of values, and (\(\frac{\text{attendee Z score}}{2.72}\)) should be in the range of \(\pm 1.3\), with the larger values being extremal. When this overtakes the \(\text{standardisedSurplusScore}\), (surpassing the value just greater than 1), we want this to occur quite rapidly because extremal compromise is much more important to deal with. Therefore we cube it. Cubing not only rises quickly, but unlike squaring, it maintains the \(\pm\), which is important for capturing whether the value is above or below the median. After some fine tuning, it also appears to give an optimal result.  
 <br>
 <br>
 The value of 2.72 comes from the fact that for a normal distribution, 95.4% of values are found within 2 standard deviations of the average and 99.7% of values are found within 3 standard deviations of the average. This gave a rough range between 2-3 and after some fine tuning, 2.72 gave the optimal result. 
