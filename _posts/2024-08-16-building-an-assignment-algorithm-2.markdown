@@ -69,7 +69,7 @@ Every time slot, attendees are given a slot compromise score according to what c
 In the end, we decided the compromise for getting the first choice should be 0 (no compromise at all),  the compromise for getting the 2nd choice is 2 and the compromise for getting their 3rd choice was 5. Take note of the incremental difference between first to second and second to third - the slot compromise score becomes increasingly worse.
 
 <details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
-This is based on the formula \(Cₙ = n + Cₙ₋₁\), where \(C\)ₙ is the compromise for the nth choice and \(C1 = 0\) . Which can also be reformulated to... \[Cₙ = \frac{(n-1)(n+2)}{2}\]
+This is based on the formula  \(Cₙ = n + Cₙ₋₁\), where \(C\)ₙ is the compromise for the nth choice and \(C1 = 0\) . Which can also be reformulated to... \[Cₙ = \frac{(n-1)(n+2)}{2}\]
 <br>
 Looking back however, perhaps getting your 5th choice or your 6th choice wouldn’t be much different so perhaps choosing a curve that tends to a fixed value would be better (perhaps of the form \(1-\frac{1}{x}\)), as we have done with surplus difference. In any case, there were only 3 choices per slot for our application, so this worked fine.  
 <br>
@@ -193,6 +193,7 @@ And:
  
 <br>
 The rationale behind this was as follows: 
+<br>
 <br>
 The \(\text{standardisedSurplusScore}\) should be in comparison to the maximum value, otherwise the compromise would give an extreme value. We want the compromise to be in the same range of values as the \(\text{standardisedSurplusScore}\), except for the outlying compromise, and therefore (\(\frac{\text{mean surplus difference}}{\text{max surplus}}\)) brings the \(\text{standardisedCompromiseScore}\) into the relative range of values, and (\(\frac{\text{attendee Z score}}{2.72}\)) should be in the range of \(\pm 1.3\), with the larger values being extremal. When this overtakes the \(\text{standardisedSurplusScore}\), (surpassing the value just greater than 1), we want this to occur quite rapidly because extremal compromise is much more important to deal with. Therefore we cube it. Cubing not only rises quickly, but unlike squaring, it maintains the \(\pm\), which is important for capturing whether the value is above or below the median. After some fine tuning, it also appears to give an optimal result.  
 <br>
