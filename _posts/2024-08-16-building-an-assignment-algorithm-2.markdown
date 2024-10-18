@@ -14,6 +14,7 @@ author: jwarren
     summary {
         font-weight: 300;
         display: block;
+        font-style: normal 
     }
     summary::after {
         cursor: pointer;
@@ -61,15 +62,13 @@ This time we will discuss  how we measured compromise,  and then explore its int
 ## Compromise
 Every time slot, attendees are given a slot compromise score according to what choice they were assigned. The greater the score, the more the attendee has had to compromise on their choice. We believe people are generally not too concerned about getting their 2nd choice, but comparatively a lot more disappointed to get their 3rd choice. Therefore we made the slot compromise score grow at an increasing rate. For example, the 3rd choice over the 2nd choice is worse than getting your 2nd choice over your 1st choice.  
 
-In the end, we decided the compromise for getting the first choice should be 0 (no compromise at all),  the compromise for getting the 2nd choice is 2 and the compromise for getting their 3rd choice was 5. Take note of the incremental difference between first to second and second to third - the slot compromise score becomes increasingly worse.  
-
-<details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
+In the end, we decided the compromise for getting the first choice should be 0 (no compromise at all),  the compromise for getting the 2nd choice is 2 and the compromise for getting their 3rd choice was 5. Take note of the incremental difference between first to second and second to third - the slot compromise score becomes increasingly worse.<details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
 This is based on the formula \(Cₙ = n + Cₙ₋₁\), where \(C\)ₙ is the compromise for the nth choice and \(C1 = 0\) . Which can also be reformulated to... \[Cₙ = \frac{(n-1)(n+2)}{2}\]
 <br>
 Looking back however, perhaps getting your 5th choice or your 6th choice wouldn’t be much different so perhaps choosing a curve that tends to a fixed value would be better (perhaps of the form \(1-\frac{1}{x}\)), as we have done with surplus difference. In any case, there were only 3 choices per slot for our application, so this worked fine.  
 <br>
 </details>
-
+<br>
 This slot compromise score is accrued after every slot assignment is added to a user’s aggregate compromise score. As it says on the tin, this tracks how much an attendee has had to compromise across multiple slots. 
 
 So for example, imagine an attendee, Alice over the course of 3 time slots, is assigned: 
@@ -139,7 +138,7 @@ We considered normalisation, however, the highest value (no matter whether an ou
 
 Finally, we landed on using the Z-score for aggregate compromise. The Z-score is a statistical value which measures how many standard deviations (a measure of spread) a dataset value is from the average. You can find out more on the Z-score <a href="https://www.investopedia.com/terms/z/zscore.asp">here</a>. This means that compromise will play a more significant role in sorting when the aggregate compromise value is an outlier, however it would have a relatively small effect if the value is close to the average of the attendees aggregate compromise, no matter how large the compromise or the surplus is.  
 
-<details><summary>click the 'more' button for to see how we compared compromise and surplus difference exactly, along with the rationale.</summary>
+<details><summary>Click the 'more' button for to see how we compared compromise and surplus difference exactly, along with the rationale.</summary>
 <br>
 \[\text{sorting score} = standardisedSurplusScore - standardisedCompromiseScore \]
 Where: 
