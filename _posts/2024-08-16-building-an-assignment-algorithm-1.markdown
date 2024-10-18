@@ -25,8 +25,15 @@ author: jwarren
     }
     details[open] > summary::after {
         content: ' [−less]';
+        font-weight: 400;
     }
 </style>
+
+<!-- MathJax the maths equations -->
+<script type="text/javascript" async
+ src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
 
 Last year, our team was working on an app that organised conferences. Our most interesting mission, in my opinion, was to design and build an algorithm that assigned talks to attendees according to their choices. This algorithm would save organisers the time, human error and brain power required to ensure all attendees are fairly allocated. After having built and run our algorithm, we achieved results that improved the fairness of previously time-costly hand-calculated assignments by 30% (according to our measure), only taking seconds of calculation!
 
@@ -127,26 +134,24 @@ Surplus difference is calculated by finding the difference between the room surp
   </tr>
   <tr>
     <td>Oversubscribed</td>
-    <td>Number of group attendees <br>- max attendees</td>
+    <td>Number of group attendees <br>- (max attendees)</td>
     <td>Room surplus > 0</td>
   </tr>
   <tr>
     <td>Undersubscribed</td>
-    <td>Number of group attendees <br>- min attendees <br>- number of attendees in slot</td>
+    <td>Number of group attendees <br>- (min attendees) <br>- (number of attendees in slot)</td>
     <td>Room surplus <br> < -(Number of attendees in the slot)</td>
   </tr>
   <tr>
     <td>Undersubscribed</td>
-    <td>Number of group attendees <br>- max attendees</td>
-    <td>-(Number of attendees in the slot) <br>< Room surplus < 0</td>
+    <td>Number of group attendees <br>- (max attendees)</td>
+    <td>-(Number of attendees in the slot) <br>< (Room surplus) <br>< 0</td>
   </tr>
 </table>
 
 To account for the attendee choice, surplus difference would be multiplied by a weight, defined as so:
-<br>
-current group weighting = 2 - 1 / (choice for their current group)
-<br>
-The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be 1, if the user is on their 2nd choice, the weight will be 1.5 and if the user is on their 3rd choice, the weight will be 1.6666... The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
+\[\text{current group weighting} = 2 - \frac{1}{choice for their current group}\]
+The weight gives more emphasis to the surplus difference if a user’s current group is their second choice, over whether a user is in their 1st choice. The formula given is if the user is on their first choice, the weight will be 1, if the user is on their 2nd choice, the weight will be 1.5 and if the user is on their 3rd choice, the weight will be \( 1.\dot{6} \). The thought behind this was that though the “felt“ difference for the first few choices would be important to the user, the remaining choices would be marginally worse but have diminishing importance between them.
 </details>
 <br>
 
