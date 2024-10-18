@@ -69,7 +69,13 @@ Every time slot, attendees are given a slot compromise score according to what c
 In the end, we decided the compromise for getting the first choice should be 0 (no compromise at all),  the compromise for getting the 2nd choice is 2 and the compromise for getting their 3rd choice was 5. Take note of the incremental difference between first to second and second to third - the slot compromise score becomes increasingly worse.
 
 <details><summary>If you would like to know how we calculated these values, click the 'more' button for more details</summary>
-This is based on the formula  \(Cₙ = n + Cₙ₋₁\), where \(C\)ₙ is the compromise for the nth choice and \(C1 = 0\) . Which can also be reformulated to... \[Cₙ = \frac{(n-1)(n+2)}{2}\]
+This is based on the formula:
+\[Cₙ = n + Cₙ₋₁\]
+<span style="font-size: smaller;">where \(C\)ₙ is the compromise for the nth choice and \(C1 = 0\).</span>
+<br>
+<br>
+This can also be reformulated to:
+\[Cₙ = \frac{(n-1)(n+2)}{2}\]
 <br>
 Looking back however, perhaps getting your 5th choice or your 6th choice wouldn’t be much different so perhaps choosing a curve that tends to a fixed value would be better (perhaps of the form \(1-\frac{1}{x}\)), as we have done with surplus difference. In any case, there were only 3 choices per slot for our application, so this worked fine.  
 <br>
@@ -154,38 +160,38 @@ Finally, we landed on using the Z-score for aggregate compromise. The Z-score is
 <br>
 <br>
 <br>
-Where: 
+Where the \(\text{standardisedCompromiseScore}\) is: 
 \[standardisedCompromiseScore = 
 \left( \frac{\text{mean surplus difference}}{\text{max surplus}} \right) \times \left( \frac{\text{attendee Z score}}{2.72} \right)^3
 \]
-<span style="font-size: smaller;">N.B. The Z score is calculated with the median to avoid extreme value skewing.</span>
+&emsp;&emsp;<span style="font-size: smaller;">N.B. The Z score is calculated with the median to avoid extreme value skewing.</span>
 <br>
 <br>
-And:
+And the \(\text{standardisedSurplusScore}\) is:
 <br>
 <br>
-\(\text{if maxSurplus} \neq 0 \text{ and attendee surplus difference} > 0 \text{:}\)
+&emsp;&emsp;\(\text{if maxSurplus} \neq 0 \text{ and attendee surplus difference} > 0 \text{:}\)
 
 \[standardisedSurplusScore = 
 \frac{\text{attendee surplus difference}}{\text{max surplus difference}}
 \]
 
-<span style="font-size: smaller;">(here max surplus has to be positive)</span>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span style="font-size: smaller;">(here max surplus has to be positive)</span>
 
 
 <br>
 <br>
-\(\text{if maxSurplus} \neq 0 \text{ and attendee surplus difference} < 0 \text{:}\)
+&emsp;&emsp;\(\text{if maxSurplus} \neq 0 \text{ and attendee surplus difference} < 0 \text{:}\)
 
 \[standardisedSurplusScore =
 \frac{\text{attendee surplus difference}}{| \text{min surplus difference} |}
 \]
 
-<span style="font-size: smaller;">(here min surplus has to be negative)</span>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span style="font-size: smaller;">(here min surplus has to be negative)</span>
 
 <br>
 <br>
-\(\text{if maxSurplus} = 0  \text{:}\)
+&emsp;&emsp;\(\text{if maxSurplus} = 0  \text{:}\)
 
 \[standardisedSurplusScore =
 \text{attendee surplus difference}
