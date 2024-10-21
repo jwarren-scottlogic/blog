@@ -76,7 +76,7 @@ Firstly, slots containing the most duplicate talks go first. Duplicate talks are
 
 Next, we sort by how spread-out choices are. Duplicate talk slots with an even spread of choices to go first. This way, users aren't assigned a bad set of choices because the good assignments are no longer possible. This would be due to the previously assigned slots, which were oversubscribed (and therefore compromise high). Whereas as we discussed earlier, we want non-duplicate talk slots with a small spread (ie as many oversubscribed talks as possible) to go first. This is so that again, we generate as much compromise at the beginning of the algorithm run as possible, which will then even out over all the delegates by the end. After trialling and testing this method, we found it led to optimal results. 
 </details>
-
+<br>
 There is one more element to the algorithm that we haven’t introduced yet, which is needed before we bring everything together.  
 
 ## Under Subscribed Talk Assignments:
@@ -110,7 +110,8 @@ You can find a flowchart with more detail below:
     src="https://www.canva.com/design/DAGUMczeZ0g/zzjhOfeMNDN88TuDguYPyg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
   </iframe>
 </div>
-(The first slide is the overview, then each subsequent slide describes one step in that overview.)
+(The first slide is the overview, then each subsequent slide describes one step in that overview). If you wish to view it in an interactive format [click here](https://www.canva.com/design/DAF9g8yEY5o/FmOLmRl-CMZ-W0JRa_c6rg/edit?utm_content=DAF9g8yEY5o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton). 
+
 
 ## Conclusion
 
