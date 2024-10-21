@@ -144,7 +144,7 @@ Capturing these nuances in an algorithm however is easier said than done. Aggreg
 For example, in slot 2, aggregate compromise per attendee could range from 0-5 (1st choice = 0, 3rd choice = 5), but in slot 10, the aggregate compromise per attendee could range between 0 and 50. Ignoring the fact that the algorithm would not be working very well if one person had 10x 3rd choices (giving an aggregate compromise score of 50)!  
 <br>
 <br>
-However, in both slot 2 and 10, the average surplus difference may be within the range of -6 and 6, assuming the average room surplus is 3. See the first blog in the series <a href="{{site.baseurl}}/2024/08/16/building-an-assignment-algorithm-1.html">here</a> for how the surplus difference is calculated. 
+However, in both slot 2 and 10, the average surplus difference may be within the range of -6 and 6, assuming the average room surplus is 3. See the <a href="{{site.baseurl}}/2024/08/16/building-an-assignment-algorithm-1.html">first blog</a> in the series for how the surplus difference is calculated. 
 <br>
 </details>
 
@@ -164,7 +164,7 @@ Where the \(\text{standardisedCompromiseScore}\) is:
 \[standardisedCompromiseScore = 
 \left( \frac{\text{mean surplus difference}}{\text{max surplus}} \right) \times \left( \frac{\text{attendee Z score}}{2.72} \right)^3
 \]
-&emsp;&emsp;<span style="font-size: smaller;">N.B. The Z score is calculated with the median to avoid extreme value skewing.</span>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span style="font-size: smaller;">N.B. The Z score is calculated with the median to avoid extreme value skewing.</span>
 <br>
 <br>
 And the \(\text{standardisedSurplusScore}\) is:
@@ -176,7 +176,7 @@ And the \(\text{standardisedSurplusScore}\) is:
 \frac{\text{attendee surplus difference}}{\text{max surplus difference}}
 \]
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span style="font-size: smaller;">(here max surplus has to be positive)</span>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span style="font-size: smaller;">(here max surplus has to be positive)</span>
 
 
 <br>
@@ -187,7 +187,7 @@ And the \(\text{standardisedSurplusScore}\) is:
 \frac{\text{attendee surplus difference}}{| \text{min surplus difference} |}
 \]
 
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span style="font-size: smaller;">(here min surplus has to be negative)</span>
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<span style="font-size: smaller;">(here min surplus has to be negative)</span>
 
 <br>
 <br>
