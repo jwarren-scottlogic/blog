@@ -94,10 +94,12 @@ Here is the list of steps to be taken for the algorithm:
 1. Data (of attendee choices) is collected and formatted 
 2. Slots are sorted 
 3. For each slot, groups are made for every talk in that slot, and then attendees are initially put into groups based on their first choice 
-4. Next, attendees are assigned talks 
-  a. Attendees are first of all sorted by comparing their personal compromise and personal surplus difference (ie how much they have already had to compromise, and what is the potential for compromising in the future if they don’t get the current choice talk). 
-  b. If a talk is undersubscribed, then attendees from other groups are moved into this group. 
-  c. Then attendees are added into groups until a group has reached max capacity. When this occurs, the remaining attendees are moved into different groups according to their next choice (as long as they have not already been assigned this talk in a previous slot). 
+4. Next, attendees are assigned talks
+    <ol type="a">
+        <li>Attendees are first of all sorted by comparing their personal compromise and personal surplus difference (ie how much they have already had to compromise, and what is the potential for compromising in the future if they don’t get the current choice talk). </li>
+        <li>If a talk is undersubscribed, then attendees from other groups are moved into this group. </li>
+        <li>Then attendees are added into groups until a group has reached max capacity. When this occurs, the remaining attendees are moved into different groups according to their next choice (as long as they have not already been assigned this talk in a previous slot). </li>
+    </ol>
 5. Slot compromise for each user is calculated and then added to their aggregate compromise 
 
 You can find a flowchart with even more detail in [this link](https://www.canva.com/design/DAF9g8yEY5o/FmOLmRl-CMZ-W0JRa_c6rg/edit?utm_content=DAF9g8yEY5o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton). 
