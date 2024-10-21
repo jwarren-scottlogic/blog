@@ -110,7 +110,7 @@ You can find a flowchart with more detail below:
     src="https://www.canva.com/design/DAGUMczeZ0g/zzjhOfeMNDN88TuDguYPyg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
   </iframe>
 </div>
-(The first slide is the overview, then each subsequent slide describes one step in that overview). If you wish to view it in an interactive format [click here](https://www.canva.com/design/DAF9g8yEY5o/FmOLmRl-CMZ-W0JRa_c6rg/edit?utm_content=DAF9g8yEY5o&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton). 
+(The first slide is the overview, then each subsequent slide describes one step in that overview). 
 
 
 ## Conclusion
